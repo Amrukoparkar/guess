@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number Game</h1>
+        <p>Guess the number between 1 and 100 or type 'Q' to quit:</p>
+        <input type="text" id="userInput" placeholder="Enter your guess">
+        <button onclick="submitGuess()">Submit Guess</button>
+        <p id="message"></p>
+    </div>
+    <script>
+        async function submitGuess() {
+            const userInput = document.getElementById('userInput').value;
+            const response = await fetch('/guess', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({guess: userInput})
+            });
+            const data = await response.json();
+            document.getElementById('message').textContent = data.message;
+        }
+    </script>
+</body>
+</html>
